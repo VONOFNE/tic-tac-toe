@@ -1,4 +1,9 @@
-#include"game.h"
+#include <stdio.h>
+#include<stdlib.h>
+#include <time.h>
+
+const int ROW = 3;
+const int COL = 3;
 
 
 
@@ -59,6 +64,50 @@ void Displayboard(char board[ROW][COL],int row,int col)
     }
 }
 
+void Playermove(char board[ROW][COL],int row,int col)
+{
+    int x = 0;
+    int y = 0;
+    while(1)
+    {
+        printf("Please make your move>:");
+        scanf("%d %d",&x,&y);
+        if(board[x-1][y-1] = ' ')
+        {
+            if((x>0 && x <= 3) && (y>0 && y <= 3))
+            {
+                board[x-1][y-1] = '*';
+                break;
+            }
+            else
+            {
+                printf("Wrong number,please re-enter");
+            }
+        }
+        else
+        {
+            printf("Occupied");
+        }
+    }
+}
+
+void Computermove(char board[ROW][COL],int row,int col)
+{
+    int x = rand() % row;
+    int y = rand() % col;
+    printf("Computer moves>:");
+    while(1)
+    {
+        if(board[x][y] = ' ')
+        {
+            board[x][y] = '#';
+            break;
+        }
+    }
+    
+}
+
+
 void game()
 {
     char board[ROW][COL];
@@ -67,11 +116,22 @@ void game()
     //打印棋盘
     Displayboard(board,ROW,COL);
 
+    while(1)
+    {
+        //玩家走
+        Playermove(board,ROW,COL);
+        Displayboard(board,ROW,COL);
+        //电脑走
+        Computermove(board,ROW,COL);
+        Displayboard(board,ROW,COL);
+    }
+
 }
 
 int main()
 {
     int input1 = 1;
+    srand((unsigned int)time(NULL));
     do
     {
         menu();
