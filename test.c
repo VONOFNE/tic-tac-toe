@@ -93,20 +93,54 @@ void Playermove(char board[ROW][COL],int row,int col)
 
 void Computermove(char board[ROW][COL],int row,int col)
 {
-    int x = rand() % row;
-    int y = rand() % col;
-    printf("Computer moves>:");
+    printf("Computer moves>:\n");
     while(1)
     {
-        if(board[x][y] = ' ')
+        int x = rand() % row;
+        int y = rand() % col;
+        if(board[x][y] = ' ' && board[x][y] != '*' )
         {
             board[x][y] = '#';
             break;
         }
-    }
-    
+    }    
 }
 
+char Iswin(char board[ROW][COL],int row,int col)
+{
+    int i = 0;
+    for(i = 0;i<row;i++)
+    {
+        if(board[i][0] == board[i][1] && board[i][1] == board[i][2] && board [i][1] != ' ')
+        {
+            return board[i][1];
+        }
+    }
+    for(i = 0;i<col;i++)
+    {
+        if(board[0][i] == board[1][i] && board[1][i] == board[2][i] && board [1][i] != ' ')
+        {
+            return board[1][i];
+        }
+    }
+    i = 0;
+    int j = 0; 
+    int count  = 0;
+    while(i < col - 1)
+    {
+        if(board[i][j] == board[i+1][j+1] && board[i][j] != ' ')
+        {
+            count++;
+        }
+        i++;
+        j++;
+    }
+    if(count == 2)
+    {
+        return board[i][j];
+    }
+    return 'c';
+}
 
 void game()
 {
@@ -115,17 +149,26 @@ void game()
     Initializeboard(board,ROW,COL);
     //打印棋盘
     Displayboard(board,ROW,COL);
-
+    char ret = 'c';
     while(1)
     {
         //玩家走
         Playermove(board,ROW,COL);
         Displayboard(board,ROW,COL);
+        ret = Iswin(board,ROW,COL);
+        if(ret != 'c')
+        {
+            break;
+        }
         //电脑走
         Computermove(board,ROW,COL);
         Displayboard(board,ROW,COL);
+        ret = Iswin(board,ROW,COL);
+        if(ret != 'c')
+        {
+            break;
+        }
     }
-
 }
 
 int main()
