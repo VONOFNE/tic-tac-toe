@@ -98,7 +98,7 @@ void Computermove(char board[ROW][COL],int row,int col)
     {
         int x = rand() % row;
         int y = rand() % col;
-        if(board[x][y] = ' ' && board[x][y] != '*' )
+        if(board[x][y] = ' ' && board[x][y] != '*' && board[x][y] != '#')
         {
             board[x][y] = '#';
             break;
@@ -139,7 +139,17 @@ char Iswin(char board[ROW][COL],int row,int col)
     {
         return board[i][j];
     }
-    return 'c';
+    for(i=0;i<row;i++)
+    {
+        for(j=0;j<col;j++)
+        {
+            if(board[i][j] == ' ' )
+            {
+                return 'c';
+            }
+        }
+    }
+    return '&';//平局
 }
 
 void game()
@@ -169,6 +179,14 @@ void game()
             break;
         }
     }
+    if(ret = '*' )
+    {
+        printf("You win!\n");
+    }
+    else if(ret = '#')
+    {
+        printf("Computer win!\n");
+    }
 }
 
 int main()
@@ -186,10 +204,10 @@ int main()
         game();
             break;
         case 0:
-        printf("Game Over");
+        printf("Game Over\n");
             break;
         default:
-        printf("Input error, please re-enter");
+        printf("Input error, please re-enter\n");
             break;
         }
     } while (input1);
